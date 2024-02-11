@@ -84,19 +84,17 @@ const Signin = () => {
             data.append("email", values.email);
             data.append("password", values.password);
 
-            const response = await fetch(
-                "https://laraveladmin.icaniqbd.com/api/login",
-                {
-                    method: "POST",
-                    headers: {
-                        Accept: "application/json",
-                    },
-                    body: data,
-                }
-            );
+            const response = await fetch("http://127.0.0.1:8000/api/login", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                },
+                body: data,
+            });
 
             const responseData = await response.json();
             notifytwo(responseData.user);
+            console.log(responseData);
 
             if (responseData.status == 1) {
                 dispatch(userData(responseData.user));

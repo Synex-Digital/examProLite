@@ -19,7 +19,7 @@ const Result = () => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "https://laraveladmin.icaniqbd.com/api/result/list",
+                    "http://127.0.0.1:8000/api/result/list",
                     {
                         method: "GET",
                         headers: {
@@ -37,7 +37,6 @@ const Result = () => {
             }
         }
         fetchData();
-        
     }, []);
 
     if (loading) {
@@ -49,7 +48,7 @@ const Result = () => {
         localStorage.setItem("pdf", JSON.stringify(item.id));
         try {
             const response = await fetch(
-                `https://laraveladmin.icaniqbd.com/api/result/${item.id}`,
+                `http://127.0.0.1:8000/api/result/${item.id}`,
                 {
                     method: "GET",
                     headers: {

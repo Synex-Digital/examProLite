@@ -72,7 +72,7 @@ const UserDashboard = (props) => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "https://laraveladmin.icaniqbd.com/api/performance",
+                    "http://127.0.0.1:8000/api/performance",
                     {
                         method: "GET",
                         headers: {

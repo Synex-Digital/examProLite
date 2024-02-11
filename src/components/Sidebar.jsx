@@ -38,7 +38,7 @@ const Sidebar = () => {
     let hendleLogout = async () => {
         try {
             const response = await fetch(
-                "https://laraveladmin.icaniqbd.com/api/logout",
+                "http://127.0.0.1:8000/api/logout",
                 {
                     method: "POST",
                     headers: {

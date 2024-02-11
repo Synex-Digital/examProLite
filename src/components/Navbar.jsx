@@ -30,8 +30,8 @@ const Navbar = () => {
         dispatch(navvalue(show));
     }, [show]);
     return (
-        <nav className="fixed top-0 right-0 left-0 bottom-0 flex w-full  z-[51] h-16 justify-between  bg-[#162655] shadow-md">
-            <div className="flex lg:w-[15%] items-center gap-x-3">
+        <nav className="fixed top-0 right-0 left-0 bottom-0 font-rb flex w-full  z-[51] h-16 justify-between bg-[#162655] shadow-md">
+            <div className="flex  items-center gap-x-3">
                 {show ? (
                     <>
                         <FaBars
@@ -50,15 +50,25 @@ const Navbar = () => {
                     />
                 )}
             </div>
-            <div className="flex justify-center items-center w-[70%]">
-                <h1 className="text-white text-4xl font-rb font-bold">
-                    iCAN-IQ
-                </h1>
-            </div>
 
-            <div className="flex w-[15%] items-center gap-x-3 relative justify-end mr-6">
+            <div className="flex items-center gap-x-7 relative justify-end mr-6">
+                <ul className="flex gap-x-10 font-medium text-white">
+                    <li>
+                        <link>Dashboard</link>
+                    </li>
+                    <li>Test</li>
+                    <li>Result</li>
+                    <li>Contact Us</li>
+                </ul>
                 <MdOutlineNotificationsActive className=" font-semibold text-white text-xl" />
-                <Image className=" w-12 h-12 rounded-full" imgsrc={loginUser && loginUser.profile ? loginUser.profile : profileimg} />
+                <Image
+                    className=" w-12 h-12 rounded-full"
+                    imgsrc={
+                        loginUser && loginUser.profile
+                            ? loginUser.profile
+                            : profileimg
+                    }
+                />
             </div>
         </nav>
     );
