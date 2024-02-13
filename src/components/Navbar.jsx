@@ -1,9 +1,8 @@
 import React, { useEffect, useState, Fragment } from "react";
-import { FaBars } from "react-icons/fa";
 import Image from "./layout/Image";
 import profileimg from "../assets/profile.png";
+import logo from "../assets/logo.png";
 import { MdOutlineNotificationsActive } from "react-icons/md";
-import { ImCross } from "react-icons/im";
 import { navvalue } from "../../features/navSlice";
 import { Link, useNavigate } from "react-router-dom";
 import { Menu, Transition } from "@headlessui/react";
@@ -81,110 +80,95 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 right-0 left-0 bottom-0 font-rb flex w-full  z-[51] h-[70px] justify-between bg-[#162655] shadow-md">
-            <div className="flex  items-center gap-x-3">
-                {show ? (
-                    <>
-                        <FaBars
-                            className="ml-4 cursor-pointer text-lg smalldevice:max-xl:hidden text-white"
-                            onClick={() => setShow(!show)}
-                        />
-                        <ImCross
-                            onClick={() => setShow(!show)}
-                            className="ml-4 text-white cursor-pointer font-bold xl:hidden"
-                        />
-                    </>
-                ) : (
-                    <FaBars
-                        className="ml-3 cursor-pointer text-lg text-white"
-                        onClick={() => setShow(!show)}
-                    />
-                )}
-            </div>
+        <nav className="fixed top-0 font-rb z-[51] h-[80px] w-full bg-[#162655] shadow-md">
+            <div className="container mx-auto flex py-2 pl-5 justify-between w-full">
+                <div className="w-[20%]">
+                    <Image className=" w-[80px]" imgsrc={logo} />
+                </div>
+                <div className="flex items-center gap-x-7 relative justify-end mr-6">
+                    <ul className="flex gap-x-10 font-medium text-white">
+                        <li>
+                            <Link to="dashboard">Dashboard</Link>
+                        </li>
+                        <li>
+                            <Link to="iqtest">Test</Link>
+                        </li>
+                        <li>
+                            <Link to="result">Result</Link>
+                        </li>
+                        <li>
+                            <Link to="address">Contact Us</Link>
+                        </li>
+                    </ul>
+                    <MdOutlineNotificationsActive className=" font-semibold text-white text-xl" />
 
-            <div className="flex items-center gap-x-7 relative justify-end mr-6">
-                <ul className="flex gap-x-10 font-medium text-white">
-                    <li>
-                        <Link to="dashboard">Dashboard</Link>
-                    </li>
-                    <li>
-                        <Link to="iqtest">Test</Link>
-                    </li>
-                    <li>
-                        <Link to="result">Result</Link>
-                    </li>
-                    <li>
-                        <Link to="address">Contact Us</Link>
-                    </li>
-                </ul>
-                <MdOutlineNotificationsActive className=" font-semibold text-white text-xl" />
-
-                <Menu as="div" className="relative ml-3">
-                    <div>
-                        <Menu.Button>
-                            <Image
-                                className=" w-12 h-12 rounded-full"
-                                imgsrc={profileimg}
-                                // imgsrc={
-                                //     loginUser && loginUser.profile
-                                //         ? loginUser.profile
-                                //         : profileimg
-                                // }
-                            />
-                        </Menu.Button>
-                    </div>
-                    <Transition
-                        as={Fragment}
-                        enter="transition ease-out duration-100"
-                        enterFrom="transform opacity-0 scale-95"
-                        enterTo="transform opacity-100 scale-100"
-                        leave="transition ease-in duration-75"
-                        leaveFrom="transform opacity-100 scale-100"
-                        leaveTo="transform opacity-0 scale-95"
-                    >
-                        <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link
-                                        to="result"
-                                        className={classNames(
-                                            active ? "bg-gray-100" : "",
-                                            "block px-4 py-2 text-sm text-gray-700"
-                                        )}
-                                    >
-                                        Your Profile
-                                    </Link>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <a
-                                        href="#"
-                                        className={classNames(
-                                            active ? "bg-gray-100" : "",
-                                            "block px-4 py-2 text-sm text-gray-700"
-                                        )}
-                                    >
-                                        Settings
-                                    </a>
-                                )}
-                            </Menu.Item>
-                            <Menu.Item>
-                                {({ active }) => (
-                                    <Link
-                                        onClick={hendleLogout}
-                                        className={classNames(
-                                            active ? "bg-gray-100" : "",
-                                            "block px-4 py-2 text-sm text-gray-700"
-                                        )}
-                                    >
-                                        Sign out
-                                    </Link>
-                                )}
-                            </Menu.Item>
-                        </Menu.Items>
-                    </Transition>
-                </Menu>
+                    <Menu as="div" className="relative ml-3">
+                        <div>
+                            <Menu.Button>
+                                <Image
+                                    className=" w-12 h-12 rounded-full"
+                                    imgsrc={profileimg}
+                                    // imgsrc={
+                                    //     loginUser && loginUser.profile
+                                    //         ? loginUser.profile
+                                    //         : profileimg
+                                    // }
+                                />
+                            </Menu.Button>
+                        </div>
+                        <Transition
+                            as={Fragment}
+                            enter="transition ease-out duration-100"
+                            enterFrom="transform opacity-0 scale-95"
+                            enterTo="transform opacity-100 scale-100"
+                            leave="transition ease-in duration-75"
+                            leaveFrom="transform opacity-100 scale-100"
+                            leaveTo="transform opacity-0 scale-95"
+                        >
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            to="result"
+                                            className={classNames(
+                                                active ? "bg-gray-100" : "",
+                                                "block px-4 py-2 text-sm text-gray-700"
+                                            )}
+                                        >
+                                            Your Profile
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <a
+                                            href="#"
+                                            className={classNames(
+                                                active ? "bg-gray-100" : "",
+                                                "block px-4 py-2 text-sm text-gray-700"
+                                            )}
+                                        >
+                                            Settings
+                                        </a>
+                                    )}
+                                </Menu.Item>
+                                <Menu.Item>
+                                    {({ active }) => (
+                                        <Link
+                                            onClick={hendleLogout}
+                                            className={classNames(
+                                                active ? "bg-gray-100" : "",
+                                                "block px-4 py-2 text-sm text-gray-700"
+                                            )}
+                                        >
+                                            Sign out
+                                        </Link>
+                                    )}
+                                </Menu.Item>
+                            </Menu.Items>
+                        </Transition>
+                    </Menu>
+                </div>
             </div>
         </nav>
     );

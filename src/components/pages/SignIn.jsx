@@ -94,7 +94,6 @@ const Signin = () => {
 
             const responseData = await response.json();
             notifytwo(responseData.user);
-            console.log(responseData);
 
             if (responseData.status == 1) {
                 dispatch(userData(responseData.user));

@@ -96,7 +96,7 @@ const UserDashboard = (props) => {
     
 
     return (
-        <div className="flex flex-col md:flex-row gap-4  justify-between mt-16 p-4 w-full  ">
+        <div className="flex flex-col md:flex-row gap-4  justify-between mt-20 p-4 w-full  ">
             <div className="xl:w-[72%]">
                 <div className="grid gap-4 h-fit w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-center">
                     <div className="rounded-lg border text-[#6D6D6D] border-gray-300 px-8 py-5 shadow-sm flex flex-col">
