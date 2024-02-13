@@ -2,25 +2,25 @@ import React from "react";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
 
-const SkeletonDesign = () => {
+const SkeletonDesign = ({Bwidth}) => {
     return (
         <>
-            <div className="w-[32%] ">
+            <div className={`w-[${Bwidth}]`}>
                 <div className="border p-5 rounded-2xl shadow-md">
                     <div className="w-[80%]">
-                        <Skeleton count={1} />
+                        <Skeleton className="" count={1} />
                     </div>
-                    <div className="my-4">
-                        <Skeleton count={1} />
+                    <div className="py-2">
+                        <Skeleton className="h-7" count={1} />
                     </div>
-                    <div className="w-1/2">
+                    <div className="w-[20%]">
                         <Skeleton count={1} />
                     </div>
                     <div className=" my-5">
                         <Skeleton count={1} />
                     </div>
-                    <div className=" h-10 w-full rounded-lg ">
-                        <Skeleton count={1} />
+                    <div className=" rounded-lg ">
+                        <Skeleton className="h-8" count={1} />
                     </div>
                 </div>
             </div>

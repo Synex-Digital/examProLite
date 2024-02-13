@@ -6,6 +6,7 @@ import { PiClockClockwiseFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import { examResult } from "../../../features/resultSlice";
 import { pdfDownload } from "../../../features/downloadPdfSlice";
+import SkeletonDesign from "../layout/SkeletonDesign";
 
 const Result = () => {
     let navigate = useNavigate();
@@ -40,7 +41,16 @@ const Result = () => {
     }, []);
 
     if (loading) {
-        return <h1 className="mt-16 text-2xl">Loading......</h1>;
+        return (
+            <div className="container mx-auto mt-24 flex gap-5 flex-wrap ">
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+            </div>
+        );
     }
 
     let hendleView = async (item) => {
@@ -67,17 +77,15 @@ const Result = () => {
         navigate("/user/show");
     };
     return (
-        <section className="flex mt-16 p-4 w-full">
-            <div
-                className={` ${
-                    show ? "xl:w-[70%" : "xl:w-[92%"
-                } flex lg:max-xl:w-full gap-x-3 gap-y-3 flex-wrap`}
-            >
+        <section className="flex mt-24 w-full">
+            <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
                 {modalresult.map((item, index) => (
                     <div
                         key={index}
-                        className="smalldevice:max-sm:w-full sm:max-lg:w-[49%] lg:max-xl:w-[49.3%] "
+                        className="w-[32%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl "
                     >
+                        <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
+                            <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
                         <div className="border p-5 rounded-2xl shadow-md">
                             <h2 className="font-rb text-2xl font-semibold text-tbcolor mt-2 mb-4">
                                 {item.model_name}

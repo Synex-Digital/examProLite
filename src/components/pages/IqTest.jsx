@@ -77,13 +77,13 @@ const IqTest = (props) => {
 
     if (loading) {
         return (
-            <div className="container mx-auto mt-24 flex justify-between gap-y-5 flex-wrap">
-                <SkeletonDesign />
-                <SkeletonDesign />
-                <SkeletonDesign />
-                <SkeletonDesign />
-                <SkeletonDesign />
-                <SkeletonDesign />
+            <div className="container mx-auto mt-24 flex gap-5 flex-wrap">
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
+                <SkeletonDesign Bwidth={"32%"}/>
             </div>
         );
     }
@@ -154,7 +154,7 @@ const IqTest = (props) => {
     return (
         <>
             <section className="mt-24 w-full">
-                <div className="flex flex-wrap justify-between gap-y-5 container mx-auto overflow-hidden">
+                <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
                     {models.map((item, index) => (
                         <div
                             key={index}
