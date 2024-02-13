@@ -6,7 +6,7 @@ import profile from "../../assets/profile.png";
 import Slider from "react-slick";
 import SampleNextArrow from "../layout/SampleNextArrow";
 import SamplePrevArrow from "../layout/SamplePrevArrow";
-import SkeletonDesign from "../layout/SkeletonDesign";
+import SkeletonDesignDashboard from "../layout/SkeletonDesignDashboard";
 
 const UserDashboard = (props) => {
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
@@ -97,24 +97,7 @@ const UserDashboard = (props) => {
 
     if (loading) {
         return (
-            <div className="flex flex-col md:flex-row gap-4 mt-24 px-2 w-full container mx-auto">
-                <div className="xl:w-[72%] ">
-                    <div className="flex justify-between mb-5">
-                        <SkeletonDesign Bwidth={"32%"} />
-                        <SkeletonDesign Bwidth={"32%"} />
-                        <SkeletonDesign Bwidth={"32%"} />
-                    </div>
-                    <div>
-                        <SkeletonDesign Bwidth={"100%"} />
-                    </div>
-                </div>
-                <div className="xl:w-[28%] ">
-                    <div className="mb-5">
-                        <SkeletonDesign Bwidth={"100%"} />
-                    </div>
-                    <SkeletonDesign Bwidth={"100%"} />
-                </div>
-            </div>
+            <SkeletonDesignDashboard/>
         );
     }
 

@@ -10,6 +10,8 @@ import { userExamQuestion } from "../../../features/examQuestionSlice";
 import { modelTest } from "../../../features/modelTestSlice";
 import { userExamid } from "../../../features/examIdSlice";
 import SkeletonDesign from "../layout/SkeletonDesign";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
 
 const customStyles = {
     content: {
@@ -77,13 +79,25 @@ const IqTest = (props) => {
 
     if (loading) {
         return (
-            <div className="container mx-auto mt-24 flex gap-5 flex-wrap">
-                <SkeletonDesign Bwidth={"32%"}/>
-                <SkeletonDesign Bwidth={"32%"}/>
-                <SkeletonDesign Bwidth={"32%"}/>
-                <SkeletonDesign Bwidth={"32%"}/>
-                <SkeletonDesign Bwidth={"32%"}/>
-                <SkeletonDesign Bwidth={"32%"}/>
+            <div className="flex mt-24 gap-5 flex-wrap container mx-auto ">
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
             </div>
         );
     }

@@ -31,6 +31,7 @@ const Navbar = () => {
     let navigate = useNavigate();
     let dispatch = useDispatch();
     let usertoken = useSelector((state) => state.tokened.Token);
+    let loginUser = useSelector((state) => state.loggedUser.loginUser);
 
     let [show, setShow] = useState(true);
     useEffect(() => {
@@ -107,12 +108,11 @@ const Navbar = () => {
                             <Menu.Button>
                                 <Image
                                     className=" w-12 h-12 rounded-full"
-                                    imgsrc={profileimg}
-                                    // imgsrc={
-                                    //     loginUser && loginUser.profile
-                                    //         ? loginUser.profile
-                                    //         : profileimg
-                                    // }
+                                    imgsrc={
+                                        loginUser && loginUser.profile
+                                           ? loginUser.profile
+                                            : profileimg
+                                    }
                                 />
                             </Menu.Button>
                         </div>
