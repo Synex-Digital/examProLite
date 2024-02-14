@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { CiCircleCheck } from "react-icons/ci";
 import { RxCrossCircled } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
-import Image from "../layout/Image";
-import logo from "../../assets//logo.svg";
+import { PDFViewer, BlobProvider } from "@react-pdf/renderer";
+import PdfDesign from "./PdfDesign";
 
 const Show = () => {
     let navigate = useNavigate();
@@ -99,7 +99,7 @@ const Show = () => {
                                     {result.history.time_taken}
                                 </td>
                                 <td className="border border-gray-400 px-4 py-2 text-center">
-                                    {result.history.exam_time}
+                                    {result.history.exam_time} mins
                                 </td>
                             </tr>
                         </tbody>
@@ -107,20 +107,23 @@ const Show = () => {
                 </div>
 
                 <div className="w-full flex justify-between items-center my-[30px]">
-                    {loading ? (
-                        <a className="py-[6.5px] px-20 bg-[#3888F9] font-rb rounded-sm font-semibold text-white cursor-pointer">
-                            <div className="inline-block animate-spin rounded-full border border-t-4 border-gray-200 h-5 w-5"></div>
-                        </a>
-                    ) : (
+                    
                         <>
-                            <a
-                                onClick={handlePdf}
-                                className="py-2 px-10 bg-[#3888F9] font-rb rounded-sm font-semibold text-white cursor-pointer"
+                            <BlobProvider
+                                document={<PdfDesign results={result} />}
                             >
-                                Download Sheet
-                            </a>
+                                {({ url }) => (
+                                    <a
+                                        href={url}
+                                        className="block w-full max-w-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                    >
+                                        Download Sheet
+                                    </a>
+                                )}
+                            </BlobProvider>
                         </>
-                    )}
                     <div className="flex items-center justify-center">
                         <p className="text-lg font-medium">Filter by:</p>
                         <select

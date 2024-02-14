@@ -90,7 +90,7 @@ const Result = () => {
     return (
         <section className="flex mt-24 w-full">
             <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
-                {modalresult.map((item, index) => (
+                {modalresult.reverse().map((item, index) => (
                     <div
                         key={index}
                         className="w-[32%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl "
