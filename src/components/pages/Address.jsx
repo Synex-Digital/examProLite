@@ -6,7 +6,7 @@ import profile from "../../assets/profile.png";
 
 const Address = () => {
     return (
-        <div className="mt-16 w-full flex items-center justify-center h-full">
+        <div className="mt-24 w-full flex items-center justify-center h-full">
             <div className="flex justify-center items-center flex-col text-center text-cdrop">
                 <Image className="w-[130px] h-[130px]" imgsrc={logo} />
                 <h1 className="font-rb font-semibold text-2xl mt-6">

@@ -6,6 +6,7 @@ import profile from "../../assets/profile.png";
 import Slider from "react-slick";
 import SampleNextArrow from "../layout/SampleNextArrow";
 import SamplePrevArrow from "../layout/SamplePrevArrow";
+import SkeletonDesignDashboard from "../layout/SkeletonDesignDashboard";
 
 const UserDashboard = (props) => {
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
@@ -13,6 +14,7 @@ const UserDashboard = (props) => {
     let [performance, setPerformance] = useState("");
     let [banner, setBanner] = useState([]);
     let [activeDot, setActiveDot] = useState(0);
+    let [loading, setloading] = useState(true);
 
     const settings = {
         dots: true,
@@ -85,21 +87,27 @@ const UserDashboard = (props) => {
                 const responseData = await response.json();
                 setPerformance(responseData.data);
                 setBanner(responseData.banner);
+                setloading(false);
             } catch (error) {
                 throw error;
             }
         }
         fetchData();
-        
     }, []);
 
-    
+    if (loading) {
+        return (
+            <SkeletonDesignDashboard/>
+        );
+    }
 
     return (
-        <div className="flex flex-col md:flex-row gap-4  justify-between mt-16 p-4 w-full  ">
+        <div className="flex flex-col md:flex-row gap-4 mt-24 px-2 w-full container mx-auto">
             <div className="xl:w-[72%]">
-                <div className="grid gap-4 h-fit w-full grid-cols-1 md:grid-cols-2 lg:grid-cols-3 text-center">
-                    <div className="rounded-lg border text-[#6D6D6D] border-gray-300 px-8 py-5 shadow-sm flex flex-col">
+                <div className=" w-full flex justify-between text-center">
+                    <div className="rounded-lg bg-[#EFF5F5] px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
+                        <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
+                        <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
                         <div className="flex gap-x-3 items-center justify-center">
                             <div className="w-[18px] h-[18px] rounded-full bg-[#6D6D6D]"></div>
                             <p className="font-rb text-2xl">Total Tests</p>
@@ -109,8 +117,10 @@ const UserDashboard = (props) => {
                         </span>
                     </div>
 
-                    <div className="rounded-lg border text-[#6D6D6D] border-gray-300 px-8 py-5 shadow-sm flex flex-col">
+                    <div className="rounded-lg bg-[#EFF5F5]  px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
                         <div className="flex gap-x-3 items-center justify-center">
+                            <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
+                            <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
                             <div className="w-[18px] h-[18px] rounded-full bg-[#32B548]"></div>
                             <p className="font-rb text-2xl">Average Score</p>
                         </div>
@@ -118,7 +128,9 @@ const UserDashboard = (props) => {
                             {performance == null ? 0 : performance.av_score}
                         </span>
                     </div>
-                    <div className="rounded-lg border text-[#6D6D6D] border-gray-300 px-8 py-5 shadow-sm flex flex-col">
+                    <div className="rounded-lg  bg-[#EFF5F5]  px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
+                        <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
+                        <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
                         <div className="flex gap-x-3 items-center justify-center">
                             <div className="w-[18px] h-[18px] rounded-full bg-[#DB2828]"></div>
                             <p className="font-rb text-2xl">Average Time</p>
@@ -131,14 +143,18 @@ const UserDashboard = (props) => {
 
                 <div className="smalldevice:max-xl:hidden mt-5 w-full">
                     <Slider {...settings}>
-                        {banner && banner.map((item,index) => (
-                            <div key={index} className="!flex justify-center items-center">
-                                <Image
-                                    className="rounded-lg h-[315px]"
-                                    imgsrc={item.banner}
-                                />
-                            </div>
-                        ))}
+                        {banner &&
+                            banner.map((item, index) => (
+                                <div
+                                    key={index}
+                                    className="!flex justify-center items-center"
+                                >
+                                    <Image
+                                        className="rounded-lg h-[315px]"
+                                        imgsrc={item.banner}
+                                    />
+                                </div>
+                            ))}
                     </Slider>
                 </div>
             </div>
@@ -171,7 +187,7 @@ const UserDashboard = (props) => {
                 </div>
 
                 <div className="flex justify-center bg-[#162655] p-5 rounded-2xl">
-                    <img src={logo} className="w-[70%]" />
+                    <img src={logo} className="w-[55%]" />
                 </div>
             </div>
         </div>

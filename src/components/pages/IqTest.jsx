@@ -9,6 +9,9 @@ import { toast } from "react-toastify";
 import { userExamQuestion } from "../../../features/examQuestionSlice";
 import { modelTest } from "../../../features/modelTestSlice";
 import { userExamid } from "../../../features/examIdSlice";
+import SkeletonDesign from "../layout/SkeletonDesign";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
 
 const customStyles = {
     content: {
@@ -75,7 +78,28 @@ const IqTest = (props) => {
     }, [modalIsOpen]);
 
     if (loading) {
-        return <h1 className="mt-16 text-2xl">Loading......</h1>;
+        return (
+            <div className="flex mt-24 gap-5 flex-wrap container mx-auto ">
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+            </div>
+        );
     }
 
     let openModal = (item) => {
@@ -143,18 +167,16 @@ const IqTest = (props) => {
 
     return (
         <>
-            <section className="flex mt-16 p-4 w-full">
-                <div
-                    className={` ${
-                        show ? "xl:w-[70%" : "xl:w-[92%"
-                    } flex lg:max-xl:w-full gap-x-3 gap-y-3 flex-wrap`}
-                >
+            <section className="mt-24 w-full">
+                <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
                     {models.map((item, index) => (
                         <div
                             key={index}
-                            className="smalldevice:max-sm:w-full sm:max-lg:w-[49%] lg:max-xl:w-[49.3%] "
+                            className="w-[32%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl"
                         >
-                            <div className="border p-5 rounded-2xl shadow-md">
+                            <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
+                            <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
+                            <div className="p-5 shadow-md">
                                 <time className="flex items-center gap-x-1 justify-end font-rb text-sm text-[#6D6D6D]">
                                     <span>
                                         <BsCalendar2Check />
