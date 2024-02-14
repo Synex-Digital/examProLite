@@ -15,7 +15,6 @@ const Result = () => {
     let userToken = useSelector((state) => state.tokened.Token);
     let [modalresult, setModalResult] = useState([]);
     let [loading, setloading] = useState(true);
-
     useEffect(() => {
         async function fetchData() {
             try {
@@ -32,6 +31,7 @@ const Result = () => {
 
                 const responseData = await response.json();
                 setModalResult(responseData.data);
+
                 setloading(false);
             } catch (error) {
                 throw error;
@@ -42,26 +42,26 @@ const Result = () => {
 
     if (loading) {
         return (
-            <div className="flex mt-24 gap-5 flex-wrap container mx-auto ">
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
+            <div className="flex mt-24 gap-5 flex-wrap container mx-auto">
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
+                <div className="w-[32%]">
+                    <SkeletonDesign Boxwidth={"32%"} />
+                </div>
             </div>
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
-            </div>
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
-            </div>
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
-            </div>
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
-            </div>
-            <div className="w-[32%]">
-                <SkeletonDesign Boxwidth={"32%"} />
-            </div>
-        </div>
         );
     }
 
@@ -79,7 +79,6 @@ const Result = () => {
                     },
                 }
             );
-
             const responseData = await response.json();
             dispatch(examResult(responseData));
             localStorage.setItem("result", JSON.stringify(responseData));

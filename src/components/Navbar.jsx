@@ -104,7 +104,7 @@ const Navbar = () => {
                     <MdOutlineNotificationsActive className=" font-semibold text-white text-xl" />
 
                     <Menu as="div" className="relative ml-3">
-                        <div>
+                        <div className="flex">
                             <Menu.Button>
                                 <Image
                                     className=" w-12 h-12 rounded-full"
