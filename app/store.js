@@ -8,6 +8,7 @@ import modelTestReducer from "../features/modelTestSlice";
 import examidReducer from "../features/examIdSlice";
 import resultReducer from "../features/resultSlice";
 import pdfReducer from "../features/downloadPdfSlice";
+import checkidReducer from "../features/checkidSlice";
 
 export const store = configureStore({
     reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
         examid: examidReducer,
         examresult: resultReducer,
         pdfid: pdfReducer,
+        checkid: checkidReducer,
     },
 });

@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import img from "../../assets/img1.png";
 import Image from "../layout/Image";
 import { userExamQuestion } from "../../../features/examQuestionSlice";
+import { checkId } from "../../../features/checkidSlice";
 import ModalImage from "react-modal-image";
 
 const customStyles = {
@@ -41,9 +42,14 @@ const Exam = () => {
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
     let userToken = useSelector((state) => state.tokened.Token);
     let examId = useSelector((state) => state.examid.id);
+    let chackid = useSelector((state) => state.checkid.value);
     let [loading, setloading] = useState(true);
     let [spamcheck, setSpamcheck] = useState(true);
     const [upperindex, setUpperIndex] = useState("");
+    // const [chackid, setChackid] = useState("");
+    // console.log(chackid);
+
+    // model data
 
     useEffect(() => {
         async function fetchData() {
@@ -65,38 +71,20 @@ const Exam = () => {
 
                 const responseData = await response.json();
                 setModels(responseData.data);
-
+                console.log("one");
                 setSpamcheck(false);
             } catch (error) {
                 throw error;
             }
         }
         fetchData();
-        async function fetchDatatwo() {
-            try {
-                let data = new FormData();
-                data.append("choice_id", choiceid);
-                data.append("question_id", question);
-                data.append("model_id", modeltestvaluse.id);
 
-                const response = await fetch(
-                    "http://127.0.0.1:8000/api/answer/submit",
-                    {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                            Accept: "application/json",
-                        },
-                        body: data,
-                    }
-                );
+        setSpamcheck(false);
+    }, [choiceid]);
 
-                const responseData = await response.json();
-            } catch (error) {
-                throw error;
-            }
-        }
-        fetchDatatwo();
+    // examtime
+
+    useEffect(() => {
         async function fetchDatathree() {
             try {
                 let data = new FormData();
@@ -117,13 +105,45 @@ const Exam = () => {
                 const responseData = await response.json();
                 setExamCount(responseData.exam_time);
                 setloading(false);
+                console.log("three");
             } catch (error) {
                 throw error;
             }
         }
         fetchDatathree();
         setSpamcheck(false);
-    }, [modelid, choiceid, question]);
+    }, []);
+
+    // subQus
+
+    useEffect(() => {
+        async function fetchDatatwo() {
+            try {
+                let data = new FormData();
+                data.append("choice_id", choiceid);
+                data.append("question_id", question);
+                data.append("model_id", modeltestvaluse.id);
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/answer/submit",
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                            Accept: "application/json",
+                        },
+                        body: data,
+                    }
+                );
+                console.log("TWO");
+                const responseData = await response.json();
+            } catch (error) {
+                throw error;
+            }
+        }
+        fetchDatatwo();
+        setSpamcheck(false);
+    }, [choiceid]);
 
     useEffect(() => {
         if (loginUser == null) {
@@ -180,6 +200,44 @@ const Exam = () => {
     time.setSeconds(time.getSeconds() + examcount);
 
     let hendlesubmit = async (sitem, item) => {
+        console.log(item.id);
+        // chackid.map((iteme) => {
+        //     if (iteme.qid == item.id) {
+        //         dispatch(checkId({ qid: item.id, id: sitem.id }));
+        //     } else {
+        //         if (iteme.id == sitem.id) {
+        //             dispatch(checkId([]));
+        //             console.log("two");
+        //         }
+        //     }
+        // });
+        // if (chackid == "") {
+        //     dispatch(checkId({ qid: item.id, id: sitem.id }));
+        // }
+        // if (ok == item.id) {
+        // console.log(chackid);
+        dispatch(checkId({ qid: item.id, id: sitem.id }));
+        localStorage.setItem(
+            "checkid",
+            JSON.stringify({ qid: item.id, id: sitem.id })
+        );
+        //     console.log("sdsa");
+        // } else {
+        // }
+
+        // Check if the selected choice matches any item in chackid
+        // const hasMatch = chackid.some((iteme) => iteme.qid === item.id);
+        // console.log("t", hasMatch);
+
+        // if (hasMatch) {
+        //     // Dispatch an action to update chackid
+        //     dispatch(checkId({ qid: item.id, id: sitem.id }));
+        // } else {
+        //     // Dispatch an action to remove data from chackid
+        //     dispatch(checkId([]));
+        //     console.log("two");
+        // }
+
         try {
             let data = new FormData();
             data.append("choice_id", sitem.id);
@@ -199,12 +257,20 @@ const Exam = () => {
             );
 
             const responseData = await response.json();
+            // console.log(responseData);
+            // examQuestion.map((item) => {
+            //     item.choices.map((sitem) => {
+            //         sitem.id == responseData.data.choice_id &&
+            //             setChackid(+responseData.data.choice_id);
+            //     });
+            // });
         } catch (error) {
             throw error;
         }
-        setQuestion(item.id);
-        setModelid(modeltestvaluse.id);
-        setChoiceid(sitem.id);
+
+        // setQuestion(item.id);
+        // setModelid(modeltestvaluse.id);
+        // setChoiceid(sitem.id);
     };
 
     let hendleexamsubmit = async () => {
@@ -357,12 +423,13 @@ const Exam = () => {
                                                     (sitem, index) => (
                                                         <p
                                                             key={sitem.id}
-                                                            className={`
-                                                    ${
-                                                        sitem.exam_status
-                                                            ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
-                                                            : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
-                                                    }`}
+                                                            className={`${
+                                                                sitem.id ==
+                                                                chackid[item.id]
+                                                                    ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
+                                                                    : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
+                                                            }
+                                                    `}
                                                             onClick={() =>
                                                                 hendlesubmit(
                                                                     sitem,
@@ -375,7 +442,6 @@ const Exam = () => {
                                                         </p>
                                                     )
                                                 )}
-                                                
                                         </div>
                                     </div>
                                     {lastlength != qusid ? (
