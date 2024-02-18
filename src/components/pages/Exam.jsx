@@ -10,6 +10,7 @@ import Image from "../layout/Image";
 import { userExamQuestion } from "../../../features/examQuestionSlice";
 import { checkId } from "../../../features/checkidSlice";
 import ModalImage from "react-modal-image";
+import Cookies from "universal-cookie";
 
 const customStyles = {
     content: {
@@ -27,6 +28,7 @@ const customStyles = {
 };
 
 const Exam = () => {
+    const cookies = new Cookies();
     let navigate = useNavigate();
     let dispatch = useDispatch();
     const [models, setModels] = useState([]);
@@ -46,8 +48,8 @@ const Exam = () => {
     let [loading, setloading] = useState(true);
     let [spamcheck, setSpamcheck] = useState(true);
     const [upperindex, setUpperIndex] = useState("");
+    let cookData = cookies.get("realdata");
     // const [chackid, setChackid] = useState("");
-    // console.log(chackid);
 
     // model data
 
@@ -71,7 +73,6 @@ const Exam = () => {
 
                 const responseData = await response.json();
                 setModels(responseData.data);
-                console.log("one");
                 setSpamcheck(false);
             } catch (error) {
                 throw error;
@@ -80,7 +81,7 @@ const Exam = () => {
         fetchData();
 
         setSpamcheck(false);
-    }, [choiceid]);
+    }, []);
 
     // examtime
 
@@ -105,7 +106,6 @@ const Exam = () => {
                 const responseData = await response.json();
                 setExamCount(responseData.exam_time);
                 setloading(false);
-                console.log("three");
             } catch (error) {
                 throw error;
             }
@@ -135,7 +135,6 @@ const Exam = () => {
                         body: data,
                     }
                 );
-                console.log("TWO");
                 const responseData = await response.json();
             } catch (error) {
                 throw error;
@@ -145,6 +144,31 @@ const Exam = () => {
         setSpamcheck(false);
     }, [choiceid]);
 
+    // relode
+
+    useEffect(() => {
+        const handleReload = (event) => {
+            const message =
+                "Are you sure you want to reload? This will end your session.";
+            if (!window.confirm(message)) {
+                event.preventDefault();
+            } else {
+                localStorage.removeItem("sessionData");
+            }
+        };
+
+        window.addEventListener("beforeunload", handleReload);
+        window.addEventListener("unload", handleReload);
+
+        return () => {
+            // navigate("/user/iqtest");
+            window.removeEventListener("beforeunload", handleReload);
+            window.removeEventListener("unload", handleReload);
+        };
+    }, []);
+
+    // relode
+
     useEffect(() => {
         if (loginUser == null) {
             navigate("/");
@@ -152,7 +176,17 @@ const Exam = () => {
     }, []);
 
     if (loading) {
-        return <h1 className="mt-16 text-2xl">Loading......</h1>;
+        return (
+            <div className="mt-24">
+                <Image
+                    className="mx-auto md:mb-7 mb-2 w-[120px] h-[100px]"
+                    imgsrc={img}
+                />
+                <p className=" font-rb font-bold text-xl text-center">
+                    Preparing question data. Please wait...
+                </p>
+            </div>
+        );
     }
 
     let handlereload = () => {
@@ -200,43 +234,21 @@ const Exam = () => {
     time.setSeconds(time.getSeconds() + examcount);
 
     let hendlesubmit = async (sitem, item) => {
-        console.log(item.id);
-        // chackid.map((iteme) => {
-        //     if (iteme.qid == item.id) {
-        //         dispatch(checkId({ qid: item.id, id: sitem.id }));
-        //     } else {
-        //         if (iteme.id == sitem.id) {
-        //             dispatch(checkId([]));
-        //             console.log("two");
-        //         }
-        //     }
-        // });
-        // if (chackid == "") {
-        //     dispatch(checkId({ qid: item.id, id: sitem.id }));
-        // }
-        // if (ok == item.id) {
-        // console.log(chackid);
         dispatch(checkId({ qid: item.id, id: sitem.id }));
-        localStorage.setItem(
-            "checkid",
-            JSON.stringify({ qid: item.id, id: sitem.id })
-        );
-        //     console.log("sdsa");
-        // } else {
-        // }
 
-        // Check if the selected choice matches any item in chackid
-        // const hasMatch = chackid.some((iteme) => iteme.qid === item.id);
-        // console.log("t", hasMatch);
+        let existingArray = cookies.get("realdata");
+        if (!existingArray || !Array.isArray(existingArray)) {
+            existingArray = [];
+        }
+        let newObj = { q: item.id, i: sitem.id };
+        let foundIndex = existingArray.findIndex((obj) => obj.q === item.id);
 
-        // if (hasMatch) {
-        //     // Dispatch an action to update chackid
-        //     dispatch(checkId({ qid: item.id, id: sitem.id }));
-        // } else {
-        //     // Dispatch an action to remove data from chackid
-        //     dispatch(checkId([]));
-        //     console.log("two");
-        // }
+        if (foundIndex !== -1) {
+            existingArray[foundIndex] = newObj;
+        } else {
+            existingArray.push(newObj);
+        }
+        cookies.set("realdata", existingArray);
 
         try {
             let data = new FormData();
@@ -257,20 +269,11 @@ const Exam = () => {
             );
 
             const responseData = await response.json();
-            // console.log(responseData);
-            // examQuestion.map((item) => {
-            //     item.choices.map((sitem) => {
-            //         sitem.id == responseData.data.choice_id &&
-            //             setChackid(+responseData.data.choice_id);
-            //     });
-            // });
         } catch (error) {
             throw error;
         }
 
-        // setQuestion(item.id);
-        // setModelid(modeltestvaluse.id);
-        // setChoiceid(sitem.id);
+        setChoiceid(sitem.id);
     };
 
     let hendleexamsubmit = async () => {
@@ -338,11 +341,31 @@ const Exam = () => {
         localStorage.removeItem("question");
         navigate("/user/result");
     };
+    const getQuestionClassName = (item) => {
+        const isCurrentQuestion = qusid === item.index;
+        const isAnsweredQuestion = cookData?.some(
+            (citem) => citem.q === item.id
+        );
+
+        if (isCurrentQuestion) {
+            return "!bg-[#08458a] text-white border";
+        }
+
+        if (isAnsweredQuestion) {
+            return "bg-[#20913b] text-white border";
+        }
+
+        if (item.index < qusid || item.index < upperindex + 1) {
+            return "bg-[#EF4444] text-white";
+        }
+
+        return ""; // Default class when none of the conditions are met
+    };
 
     return (
         <>
             <section className="mt-16  p-4 mx-auto ">
-                <div className=" relative">
+                <div className=" relative container mx-auto px-5">
                     <div className="flex justify-between">
                         <h2 className=" font-rb font-bold text-2xl mb-4 ">
                             {modeltestvaluse.title}
@@ -358,24 +381,9 @@ const Exam = () => {
                                 className="cursor-pointer font-rb text-lg font-medium"
                             >
                                 <p
-                                    className={`
-                                    ${
-                                        qusid == item.index &&
-                                        "!bg-[#0066db] text-white border "
-                                    }
-                                    ${
-                                        item.exam_status &&
-                                        "!bg-[#21BA45] text-white border "
-                                    } 
-                                  ${
-                                      item.index < qusid
-                                          ? "bg-red-500 text-white"
-                                          : ""
-                                  } ${
-                                        item.index < upperindex + 1
-                                            ? "bg-red-500 text-white"
-                                            : ""
-                                    } border rounded-sm py-1 px-3`}
+                                    className={`${getQuestionClassName(
+                                        item
+                                    )} border rounded-sm py-1 px-3`}
                                     onClick={() => handlequstionindex(item)}
                                 >
                                     {index + 1}
@@ -423,12 +431,13 @@ const Exam = () => {
                                                     (sitem, index) => (
                                                         <p
                                                             key={sitem.id}
-                                                            className={`${
-                                                                sitem.id ==
-                                                                chackid[item.id]
-                                                                    ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
-                                                                    : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
-                                                            }
+                                                            className={`${cookData?.map(
+                                                                (citem) =>
+                                                                    citem.i ==
+                                                                    sitem.id
+                                                                        ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
+                                                                        : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
+                                                            )} "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
                                                     `}
                                                             onClick={() =>
                                                                 hendlesubmit(
