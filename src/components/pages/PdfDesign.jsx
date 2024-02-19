@@ -148,7 +148,7 @@ const PdfDesign = ({ results }) => {
                             </Text>
                             <View style={styles.subquestiondiv}>
                                 {item.choices.map((sitem, index) => (
-                                    <Text
+                                    <Text wrap={false}
                                         key={sitem.id}
                                         style={
                                             !item.is_correct

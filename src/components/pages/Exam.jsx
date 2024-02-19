@@ -38,13 +38,14 @@ const Exam = () => {
     const [examcount, setExamCount] = useState("");
     Modal.setAppElement("#root");
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [submitLoad, setSubmitLoad] = useState(false);
     let qusid = useSelector((state) => state.queid.value);
     let examQuestion = useSelector((state) => state.question.Question);
     let modeltestvaluse = useSelector((state) => state.userModelTest.values);
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
     let userToken = useSelector((state) => state.tokened.Token);
     let examId = useSelector((state) => state.examid.id);
-    let chackid = useSelector((state) => state.checkid.value);
+    let checkid = useSelector((state) => state.checkid.value);
     let [loading, setloading] = useState(true);
     let [spamcheck, setSpamcheck] = useState(true);
     const [upperindex, setUpperIndex] = useState("");
@@ -236,19 +237,7 @@ const Exam = () => {
     let hendlesubmit = async (sitem, item) => {
         dispatch(checkId({ qid: item.id, id: sitem.id }));
 
-        let existingArray = cookies.get("realdata");
-        if (!existingArray || !Array.isArray(existingArray)) {
-            existingArray = [];
-        }
-        let newObj = { q: item.id, i: sitem.id };
-        let foundIndex = existingArray.findIndex((obj) => obj.q === item.id);
-
-        if (foundIndex !== -1) {
-            existingArray[foundIndex] = newObj;
-        } else {
-            existingArray.push(newObj);
-        }
-        cookies.set("realdata", existingArray);
+        localStorage.setItem("checkid", JSON.stringify(checkid));
 
         try {
             let data = new FormData();
@@ -277,6 +266,7 @@ const Exam = () => {
     };
 
     let hendleexamsubmit = async () => {
+        setSubmitLoad(true);
         try {
             let data = new FormData();
             data.append("model_id", modeltestvaluse.id);
@@ -299,7 +289,10 @@ const Exam = () => {
         }
         setIsOpen(true);
         dispatch(questionid(1));
+        dispatch(checkId({}));
         localStorage.setItem("questionid", JSON.stringify(1));
+        localStorage.setItem("checkid", JSON.stringify({}));
+        setSubmitLoad(false);
     };
 
     let handlearrowleft = () => {
@@ -341,26 +334,6 @@ const Exam = () => {
         localStorage.removeItem("question");
         navigate("/user/result");
     };
-    const getQuestionClassName = (item) => {
-        const isCurrentQuestion = qusid === item.index;
-        const isAnsweredQuestion = cookData?.some(
-            (citem) => citem.q === item.id
-        );
-
-        if (isCurrentQuestion) {
-            return "!bg-[#08458a] text-white border";
-        }
-
-        if (isAnsweredQuestion) {
-            return "bg-[#20913b] text-white border";
-        }
-
-        if (item.index < qusid || item.index < upperindex + 1) {
-            return "bg-[#EF4444] text-white";
-        }
-
-        return ""; // Default class when none of the conditions are met
-    };
 
     return (
         <>
@@ -381,9 +354,18 @@ const Exam = () => {
                                 className="cursor-pointer font-rb text-lg font-medium"
                             >
                                 <p
-                                    className={`${getQuestionClassName(
-                                        item
-                                    )} border rounded-sm py-1 px-3`}
+                                    className={`
+                                    ${
+                                        (qusid === item.index &&
+                                            "!bg-[#0066db] text-white border ") ||
+                                        (checkid[item.id] &&
+                                            "!bg-[#21BA45] text-white border ")
+                                    }
+                                    ${
+                                        (item.index < qusid ||
+                                            item.index < upperindex + 1) &&
+                                        "bg-red-500 text-white"
+                                    } border rounded-sm py-1 px-3`}
                                     onClick={() => handlequstionindex(item)}
                                 >
                                     {index + 1}
@@ -431,13 +413,12 @@ const Exam = () => {
                                                     (sitem, index) => (
                                                         <p
                                                             key={sitem.id}
-                                                            className={`${cookData?.map(
-                                                                (citem) =>
-                                                                    citem.i ==
-                                                                    sitem.id
-                                                                        ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
-                                                                        : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
-                                                            )} "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
+                                                            className={`${
+                                                                sitem.id ==
+                                                                checkid[item.id]
+                                                                    ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
+                                                                    : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
+                                                            }
                                                     `}
                                                             onClick={() =>
                                                                 hendlesubmit(
@@ -464,13 +445,38 @@ const Exam = () => {
                                         </div>
                                     ) : (
                                         <div>
-                                            <button
-                                                onClick={hendleexamsubmit}
-                                                className="border bg-[#21BA45] border-[#21BA45]  p-3 text-lg font-semibold text-white  cursor-pointer ml-7   smalldevice:max-sm:absolute -bottom-[70px] right-5"
-                                            >
-                                                {" "}
-                                                Submit
-                                            </button>
+                                            {submitLoad ? (
+                                                <button className="border bg-[#21BA45] border-[#21BA45] px-8 py-3  ml-7 smalldevice:max-sm:absolute -bottom-[70px] right-5">
+                                                    <svg
+                                                        className="animate-spin h-7 w-7 text-white"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <circle
+                                                            className="opacity-25"
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="10"
+                                                            stroke="currentColor"
+                                                            strokeWidth="4"
+                                                        ></circle>
+                                                        <path
+                                                            className="opacity-75"
+                                                            fill="currentColor"
+                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.373A8 8 0 0012 20v4c-6.627 0-12-5.373-12-12h4zm14-2a8 8 0 01-8 8v4c6.627 0 12-5.373 12-12h-4zM20 4.627A8 8 0 0012 4V0c6.627 0 12 5.373 12 12h-4z"
+                                                        ></path>
+                                                    </svg>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={hendleexamsubmit}
+                                                    className="border bg-[#21BA45] border-[#21BA45]  p-3 text-lg font-semibold text-white  cursor-pointer ml-7   smalldevice:max-sm:absolute -bottom-[70px] right-5"
+                                                >
+                                                    {" "}
+                                                    Submit
+                                                </button>
+                                            )}
                                         </div>
                                     )}
                                 </div>

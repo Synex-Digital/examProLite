@@ -66,7 +66,9 @@ const ExamTime = ({ expiryTimestamp }) => {
                 throw error;
             }
             dispatch(questionid(1));
+            dispatch(checkId({}));
             localStorage.setItem("questionid", JSON.stringify(1));
+            localStorage.setItem("checkid", JSON.stringify({}));
         },
     });
 

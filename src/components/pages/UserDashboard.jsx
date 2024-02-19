@@ -96,9 +96,7 @@ const UserDashboard = (props) => {
     }, []);
 
     if (loading) {
-        return (
-            <SkeletonDesignDashboard/>
-        );
+        return <SkeletonDesignDashboard />;
     }
 
     return (
@@ -160,7 +158,7 @@ const UserDashboard = (props) => {
             </div>
 
             <div className="flex xl:w-[28%] flex-col gap-4">
-                <div className=" bg-[#162655] h-fit p-5 rounded-2xl text-center">
+                <div className=" bg-[#EFF5F5] h-fit p-5 rounded-2xl text-black text-center">
                     <Image
                         className="w-24 h-24 rounded-full mx-auto"
                         imgsrc={
@@ -169,24 +167,24 @@ const UserDashboard = (props) => {
                                 : profile
                         }
                     />
-                    <h2 className=" font-rb font-bold text-2xl mt-5 text-white">
+                    <h2 className=" font-rb font-bold text-2xl mt-5 text-gray-800">
                         Welcome {loginUser.name}
                     </h2>
-                    <p className=" font-rb font-bold mt-2 text-white">
+                    <p className=" font-rb font-bold mt-2 text-gray-800">
                         ID: {loginUser.student_id}
                     </p>
-                    <p className=" font-rb font-bold my-2 text-white">
+                    <p className=" font-rb font-bold my-2 text-gray-800">
                         Email: {loginUser.email}
                     </p>
-                    <p className=" font-rb font-bold  mb-7 text-white">
+                    <p className=" font-rb font-bold  mb-7 text-gray-800">
                         Number: {loginUser.number}
                     </p>
-                    <p className="bg-[#FFCC00] px-2 py-2 rounded font-rb">
+                    <p className="bg-[#ffcc00] px-2 py-2 rounded font-rb">
                         Validity {loginUser.date}
                     </p>
                 </div>
 
-                <div className="flex justify-center bg-[#162655] p-5 rounded-2xl">
+                <div className="flex justify-center bg-[#EFF5F5] p-5 rounded-2xl">
                     <img src={logo} className="w-[55%]" />
                 </div>
             </div>
