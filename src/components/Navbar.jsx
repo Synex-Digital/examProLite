@@ -41,13 +41,16 @@ const Navbar = () => {
 
     let hendleLogout = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/logout", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${usertoken}`,
-                    Accept: "application/json",
-                },
-            });
+            const response = await fetch(
+                "https://admin.icaniqbd.synexdigital.com/api/logout",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${usertoken}`,
+                        Accept: "application/json",
+                    },
+                }
+            );
 
             const responseData = await response.json();
             notify(responseData.message);
@@ -81,16 +84,36 @@ const Navbar = () => {
                     <div className=" bg-[#EFF5F5] w-full p-5 left-0 top-[60px] md:max-lg:top-[68px] absolute">
                         <ul className=" font-medium flex flex-col gap-y-5 text-black">
                             <li>
-                                <Link to="dashboard" onClick={() => setNavbar(!navbar)}>Dashboard</Link>
+                                <Link
+                                    to="dashboard"
+                                    onClick={() => setNavbar(!navbar)}
+                                >
+                                    Dashboard
+                                </Link>
                             </li>
                             <li>
-                                <Link to="iqtest" onClick={() => setNavbar(!navbar)}>Test</Link>
+                                <Link
+                                    to="iqtest"
+                                    onClick={() => setNavbar(!navbar)}
+                                >
+                                    Test
+                                </Link>
                             </li>
                             <li>
-                                <Link to="result" onClick={() => setNavbar(!navbar)}>Result</Link>
+                                <Link
+                                    to="result"
+                                    onClick={() => setNavbar(!navbar)}
+                                >
+                                    Result
+                                </Link>
                             </li>
                             <li>
-                                <Link to="address" onClick={() => setNavbar(!navbar)}>Contact Us</Link>
+                                <Link
+                                    to="address"
+                                    onClick={() => setNavbar(!navbar)}
+                                >
+                                    Contact Us
+                                </Link>
                             </li>
                             <li>
                                 <Link
