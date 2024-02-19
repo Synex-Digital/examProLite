@@ -56,13 +56,16 @@ const Navbar = () => {
 
     let hendleLogout = async () => {
         try {
-            const response = await fetch("http://127.0.0.1:8000/api/logout", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${usertoken}`,
-                    Accept: "application/json",
-                },
-            });
+            const response = await fetch(
+                "https://admin.icaniqbd.synexdigital.com/api/logout",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${usertoken}`,
+                        Accept: "application/json",
+                    },
+                }
+            );
 
             const responseData = await response.json();
             notify(responseData.message);

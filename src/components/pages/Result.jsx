@@ -19,7 +19,7 @@ const Result = () => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/api/result/list",
+                    "https://admin.icaniqbd.synexdigital.com/api/result/list",
                     {
                         method: "GET",
                         headers: {
@@ -70,7 +70,7 @@ const Result = () => {
         localStorage.setItem("pdf", JSON.stringify(item.id));
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/result/${item.id}`,
+                `https://admin.icaniqbd.synexdigital.com/api/result/${item.id}`,
                 {
                     method: "GET",
                     headers: {

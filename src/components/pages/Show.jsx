@@ -24,7 +24,7 @@ const Show = () => {
         setloading(true);
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/result/download/${pdfID} `,
+                `https://admin.icaniqbd.synexdigital.com/api/result/download/${pdfID} `,
                 {
                     method: "GET",
                     headers: {
@@ -107,23 +107,20 @@ const Show = () => {
                 </div>
 
                 <div className="w-full flex justify-between items-center my-[30px]">
-                    
-                        <>
-                            <BlobProvider
-                                document={<PdfDesign results={result} />}
-                            >
-                                {({ url }) => (
-                                    <a
-                                        href={url}
-                                        className="block w-full max-w-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                    >
-                                        Download Sheet
-                                    </a>
-                                )}
-                            </BlobProvider>
-                        </>
+                    <>
+                        <BlobProvider document={<PdfDesign results={result} />}>
+                            {({ url }) => (
+                                <a
+                                    href={url}
+                                    className="block w-full max-w-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Download Sheet
+                                </a>
+                            )}
+                        </BlobProvider>
+                    </>
                     <div className="flex items-center justify-center">
                         <p className="text-lg font-medium">Filter by:</p>
                         <select

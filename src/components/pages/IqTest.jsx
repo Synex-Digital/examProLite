@@ -58,7 +58,7 @@ const IqTest = (props) => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/api/model/test",
+                    "https://admin.icaniqbd.synexdigital.com/api/model/test",
                     {
                         method: "GET",
                         headers: {
@@ -115,7 +115,7 @@ const IqTest = (props) => {
     let handlstart = async () => {
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/model/request/${modelsId}`,
+                `https://admin.icaniqbd.synexdigital.com/api/model/request/${modelsId}`,
                 {
                     method: "GET",
                     headers: {
@@ -146,14 +146,17 @@ const IqTest = (props) => {
             let data = new FormData();
             data.append("model_id", examId);
 
-            const response = await fetch("http://127.0.0.1:8000/api/attempt", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    Accept: "application/json",
-                },
-                body: data,
-            });
+            const response = await fetch(
+                "https://admin.icaniqbd.synexdigital.com/api/attempt",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        Accept: "application/json",
+                    },
+                    body: data,
+                }
+            );
 
             const responseData = await response.json();
             dispatch(userExamQuestion(responseData.data));
