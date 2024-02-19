@@ -80,7 +80,7 @@ const IqTest = (props) => {
 
     if (loading) {
         return (
-            <div className="flex smalldevice:max-sm:flex-col mt-24 gap-5 flex-wrap container mx-auto ">
+            <div className="flex smalldevice:max-sm:flex-col mt-24 gap-4 flex-wrap container mx-auto px-2">
                 <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
@@ -169,7 +169,7 @@ const IqTest = (props) => {
     return (
         <>
             <section className="mt-24 w-full">
-                <div className="flex smalldevice:max-sm:flex-col flex-wrap gap-5 container mx-auto overflow-hidden">
+                <div className="flex smalldevice:max-sm:flex-col flex-wrap gap-4 container px-2 mx-auto overflow-hidden">
                     {models.map((item, index) => (
                         <div
                             key={index}

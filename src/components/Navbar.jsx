@@ -14,6 +14,7 @@ import { modelTest } from "../../features/modelTestSlice";
 import { userExamid } from "../../features/examIdSlice";
 import { toast } from "react-toastify";
 import { FaBars } from "react-icons/fa";
+import { RiLogoutCircleLine } from "react-icons/ri";
 
 const notify = (mas) =>
     toast.success(mas, {
@@ -90,6 +91,15 @@ const Navbar = () => {
                             </li>
                             <li>
                                 <Link to="address">Contact Us</Link>
+                            </li>
+                            <li>
+                                <Link
+                                    onClick={hendleLogout}
+                                    to="address"
+                                    className="flex items-center gap-3"
+                                >
+                                    logout <RiLogoutCircleLine />
+                                </Link>
                             </li>
                         </ul>
                     </div>

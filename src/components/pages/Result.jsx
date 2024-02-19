@@ -42,23 +42,23 @@ const Result = () => {
 
     if (loading) {
         return (
-            <div className="flex mt-24 gap-5 flex-wrap container mx-auto">
-                <div className="w-[32%]">
+            <div className="flex smalldevice:max-sm:flex-col mt-24 gap-4 flex-wrap container mx-auto px-2">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
             </div>
@@ -89,15 +89,15 @@ const Result = () => {
     };
     return (
         <section className="flex mt-24 w-full">
-            <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
+            <div className="flex flex-wrap gap-5 smalldevice:max-sm:flex-col container mx-auto overflow-hidden">
                 {modalresult.reverse().map((item, index) => (
                     <div
                         key={index}
-                        className="w-[32%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl "
+                        className="lg:w-[32%] sm:w-[48%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl "
                     >
                         <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
                         <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
-                        <div className="border p-5 rounded-2xl shadow-md">
+                        <div className="border p-5 rounded-2xl">
                             <h2 className="font-rb text-2xl font-semibold text-tbcolor mt-2 mb-4">
                                 {item.model_name}
                             </h2>

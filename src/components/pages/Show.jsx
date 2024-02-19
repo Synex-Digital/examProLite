@@ -24,7 +24,7 @@ const Show = () => {
         setloading(true);
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/result/download/${pdfID} `,
+                `http://127.0.0.1:8000api/result/download/${pdfID} `,
                 {
                     method: "GET",
                     headers: {
@@ -63,42 +63,42 @@ const Show = () => {
                     </p>
                 </div>
 
-                <div className="w-full  border-gray-400 font-rb font-semibold text-xl flex justify-between mb-10">
-                    <table className="w-full border-collapse">
+                <div className="w-full border-gray-400 font-rb font-semibold text-xl flex justify-between mb-10">
+                    <table className="w-full table-fixed smalldevice:max-sm:font-normal border-collapse">
                         <thead>
-                            <tr className="bg-gray-200">
-                                <th className="border border-gray-400 px-4 py-2">
+                            <tr className="bg-gray-200 smalldevice:max-sm:text-sm ">
+                                <th className="border border-gray-400 sm:px-4 px-1 py-2 ">
                                     Correct answer
                                 </th>
-                                <th className="border border-gray-400 px-4 py-2">
+                                <th className="border border-gray-400 sm:px-4 px-1 py-2">
                                     Incorrect
                                 </th>
-                                <th className="border border-gray-400 px-4 py-2">
+                                <th className="border border-gray-400 sm:px-4 px-1 py-2">
                                     Total number
                                 </th>
-                                <th className="border border-gray-400 px-4 py-2">
+                                <th className="border border-gray-400 sm:px-4 px-1 py-2">
                                     Time taken
                                 </th>
-                                <th className="border border-gray-400 px-4 py-2">
+                                <th className="border border-gray-400 sm:px-4 px-1 py-2">
                                     Exam time
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td className="border border-gray-400 px-4 py-2 text-center">
+                            <tr className="smalldevice:max-sm:text-sm">
+                                <td className="border border-gray-400 sm:px-4 px-1 py-2 text-center ">
                                     {result.history.correct}
                                 </td>
-                                <td className="border border-gray-400 px-4 py-2 text-center">
+                                <td className="border border-gray-400 sm:px-4 px-1 py-2 text-center">
                                     {result.history.wrong}
                                 </td>
-                                <td className="border border-gray-400 px-4 py-2 text-center">
+                                <td className="border border-gray-400 sm:px-4 px-1 py-2 text-center">
                                     {result.history.total}
                                 </td>
-                                <td className="border border-gray-400 px-4 py-2 text-center">
+                                <td className="border border-gray-400 sm:px-4 px-1 py-2 text-center">
                                     {result.history.time_taken}
                                 </td>
-                                <td className="border border-gray-400 px-4 py-2 text-center">
+                                <td className="border border-gray-400 sm:px-4 px-1 py-2 text-center">
                                     {result.history.exam_time} mins
                                 </td>
                             </tr>
@@ -106,13 +106,13 @@ const Show = () => {
                     </table>
                 </div>
 
-                <div className="w-full flex justify-between items-center my-[30px]">
+                <div className="w-full sm:flex justify-between items-center my-[30px]">
                     <>
                         <BlobProvider document={<PdfDesign results={result} />}>
                             {({ url }) => (
                                 <a
                                     href={url}
-                                    className="block w-full max-w-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded text-center"
+                                    className="block w-full max-w-xs bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 sm:px-4 rounded text-center"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
@@ -121,7 +121,7 @@ const Show = () => {
                             )}
                         </BlobProvider>
                     </>
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center smalldevice:max-sm:mt-5">
                         <p className="text-lg font-medium">Filter by:</p>
                         <select
                             className="ml-2 border p-1 rounded-md font-medium border-[#d9d9d9] bg-[#d9d9d926]"
@@ -177,14 +177,15 @@ const Show = () => {
                             </div>
                         ) : answerValues.includes("correct") ? (
                             item.is_correct == true && (
-                                <div key={index} className="mt-[30px]">
-                                    <h2 className="font-rb text-2xl font-semibold flex gap-x-2 items-center">
+                                <div key={index} className="mt-[40px]">
+                                    <h2 className="font-rb text-xl font-semibold flex gap-x-2 items-center">
+                                        <span>{index + 1}. </span>
                                         {item.question_test_text}{" "}
                                         <span>
                                             {item.is_correct == 1 ? (
-                                                <CiCircleCheck className="text-green-800 text-lg" />
+                                                <CiCircleCheck className="text-green-800 text-xl" />
                                             ) : (
-                                                <RxCrossCircled className="text-red-800 text-lg" />
+                                                <RxCrossCircled className="text-red-800 text-xl" />
                                             )}
                                         </span>
                                     </h2>
@@ -216,14 +217,15 @@ const Show = () => {
                             )
                         ) : (
                             item.is_correct == false && (
-                                <div key={index} className="mt-[30px]">
-                                    <h2 className="font-rb text-2xl font-semibold flex gap-x-2 items-center">
+                                <div key={index} className="mt-[40px]">
+                                    <h2 className="font-rb text-xl font-semibold flex gap-x-2 items-center">
+                                        <span>{index + 1}. </span>
                                         {item.question_test_text}{" "}
                                         <span>
                                             {item.is_correct == 1 ? (
-                                                <CiCircleCheck className="text-green-800 text-lg" />
+                                                <CiCircleCheck className="text-green-800 text-xl" />
                                             ) : (
-                                                <RxCrossCircled className="text-red-800 text-lg" />
+                                                <RxCrossCircled className="text-red-800 text-xl" />
                                             )}
                                         </span>
                                     </h2>
