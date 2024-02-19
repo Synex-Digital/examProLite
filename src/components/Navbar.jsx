@@ -77,7 +77,7 @@ const Navbar = () => {
                     />
                 </div>
                 {navbar ? (
-                    <div className=" bg-[#EFF5F5] w-full p-5 left-0 top-[60px] absolute">
+                    <div className=" bg-[#EFF5F5] w-full p-5 left-0 top-[60px] md:max-lg:top-[68px] absolute">
                         <ul className=" font-medium flex flex-col gap-y-5 text-black">
                             <li>
                                 <Link to="dashboard">Dashboard</Link>
