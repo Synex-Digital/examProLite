@@ -81,16 +81,16 @@ const Navbar = () => {
                     <div className=" bg-[#EFF5F5] w-full p-5 left-0 top-[60px] md:max-lg:top-[68px] absolute">
                         <ul className=" font-medium flex flex-col gap-y-5 text-black">
                             <li>
-                                <Link to="dashboard">Dashboard</Link>
+                                <Link to="dashboard" onClick={() => setNavbar(!navbar)}>Dashboard</Link>
                             </li>
                             <li>
-                                <Link to="iqtest">Test</Link>
+                                <Link to="iqtest" onClick={() => setNavbar(!navbar)}>Test</Link>
                             </li>
                             <li>
-                                <Link to="result">Result</Link>
+                                <Link to="result" onClick={() => setNavbar(!navbar)}>Result</Link>
                             </li>
                             <li>
-                                <Link to="address">Contact Us</Link>
+                                <Link to="address" onClick={() => setNavbar(!navbar)}>Contact Us</Link>
                             </li>
                             <li>
                                 <Link
