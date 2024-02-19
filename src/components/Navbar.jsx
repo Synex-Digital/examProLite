@@ -81,13 +81,13 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="fixed top-0 font-rb z-[51] h-[80px] w-full bg-[#162655] shadow-md">
+        <nav className="fixed top-0 font-rb z-[51] h-[80px] w-full bg-[#EFF5F5] shadow-md">
             <div className="container mx-auto flex py-2 pl-5 justify-between w-full">
                 <div className="w-[20%]">
                     <Image className=" w-[80px]" imgsrc={logo} />
                 </div>
                 <div className="flex items-center gap-x-7 relative justify-end mr-6">
-                    <ul className="flex gap-x-10 font-medium text-white">
+                    <ul className="flex gap-x-10 font-medium text-black">
                         <li>
                             <Link to="dashboard">Dashboard</Link>
                         </li>
@@ -101,16 +101,15 @@ const Navbar = () => {
                             <Link to="address">Contact Us</Link>
                         </li>
                     </ul>
-                    <MdOutlineNotificationsActive className=" font-semibold text-white text-xl" />
 
                     <Menu as="div" className="relative ml-3">
                         <div className="flex">
                             <Menu.Button>
                                 <Image
-                                    className=" w-12 h-12 rounded-full"
+                                    className=" w-10 h-10 rounded-full"
                                     imgsrc={
                                         loginUser && loginUser.profile
-                                           ? loginUser.profile
+                                            ? loginUser.profile
                                             : profileimg
                                     }
                                 />
@@ -125,40 +124,16 @@ const Navbar = () => {
                             leaveFrom="transform opacity-100 scale-100"
                             leaveTo="transform opacity-0 scale-95"
                         >
-                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <Link
-                                            to="result"
-                                            className={classNames(
-                                                active ? "bg-gray-100" : "",
-                                                "block px-4 py-2 text-sm text-gray-700"
-                                            )}
-                                        >
-                                            Your Profile
-                                        </Link>
-                                    )}
-                                </Menu.Item>
-                                <Menu.Item>
-                                    {({ active }) => (
-                                        <a
-                                            href="#"
-                                            className={classNames(
-                                                active ? "bg-gray-100" : "",
-                                                "block px-4 py-2 text-sm text-gray-700"
-                                            )}
-                                        >
-                                            Settings
-                                        </a>
-                                    )}
-                                </Menu.Item>
+                            <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none overflow-hidden">
+                                <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
+                                <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
                                 <Menu.Item>
                                     {({ active }) => (
                                         <Link
                                             onClick={hendleLogout}
                                             className={classNames(
                                                 active ? "bg-gray-100" : "",
-                                                "block px-4 py-2 text-sm text-gray-700"
+                                                "block text-center font-semibold text-xl px-4 py-2 text-gray-700"
                                             )}
                                         >
                                             Sign out

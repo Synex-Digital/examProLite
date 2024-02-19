@@ -8,7 +8,9 @@ import { useNavigate } from "react-router-dom";
 import img from "../../assets/img1.png";
 import Image from "../layout/Image";
 import { userExamQuestion } from "../../../features/examQuestionSlice";
+import { checkId } from "../../../features/checkidSlice";
 import ModalImage from "react-modal-image";
+import Cookies from "universal-cookie";
 
 const customStyles = {
     content: {
@@ -26,6 +28,7 @@ const customStyles = {
 };
 
 const Exam = () => {
+    const cookies = new Cookies();
     let navigate = useNavigate();
     let dispatch = useDispatch();
     const [models, setModels] = useState([]);
@@ -35,15 +38,21 @@ const Exam = () => {
     const [examcount, setExamCount] = useState("");
     Modal.setAppElement("#root");
     const [modalIsOpen, setIsOpen] = useState(false);
+    const [submitLoad, setSubmitLoad] = useState(false);
     let qusid = useSelector((state) => state.queid.value);
     let examQuestion = useSelector((state) => state.question.Question);
     let modeltestvaluse = useSelector((state) => state.userModelTest.values);
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
     let userToken = useSelector((state) => state.tokened.Token);
     let examId = useSelector((state) => state.examid.id);
+    let checkid = useSelector((state) => state.checkid.value);
     let [loading, setloading] = useState(true);
     let [spamcheck, setSpamcheck] = useState(true);
     const [upperindex, setUpperIndex] = useState("");
+    let cookData = cookies.get("realdata");
+    // const [chackid, setChackid] = useState("");
+
+    // model data
 
     useEffect(() => {
         async function fetchData() {
@@ -65,38 +74,19 @@ const Exam = () => {
 
                 const responseData = await response.json();
                 setModels(responseData.data);
-
                 setSpamcheck(false);
             } catch (error) {
                 throw error;
             }
         }
         fetchData();
-        async function fetchDatatwo() {
-            try {
-                let data = new FormData();
-                data.append("choice_id", choiceid);
-                data.append("question_id", question);
-                data.append("model_id", modeltestvaluse.id);
 
-                const response = await fetch(
-                    "http://127.0.0.1:8000/api/answer/submit",
-                    {
-                        method: "POST",
-                        headers: {
-                            Authorization: `Bearer ${userToken}`,
-                            Accept: "application/json",
-                        },
-                        body: data,
-                    }
-                );
+        setSpamcheck(false);
+    }, []);
 
-                const responseData = await response.json();
-            } catch (error) {
-                throw error;
-            }
-        }
-        fetchDatatwo();
+    // examtime
+
+    useEffect(() => {
         async function fetchDatathree() {
             try {
                 let data = new FormData();
@@ -123,7 +113,62 @@ const Exam = () => {
         }
         fetchDatathree();
         setSpamcheck(false);
-    }, [modelid, choiceid, question]);
+    }, []);
+
+    // subQus
+
+    useEffect(() => {
+        async function fetchDatatwo() {
+            try {
+                let data = new FormData();
+                data.append("choice_id", choiceid);
+                data.append("question_id", question);
+                data.append("model_id", modeltestvaluse.id);
+
+                const response = await fetch(
+                    "http://127.0.0.1:8000/api/answer/submit",
+                    {
+                        method: "POST",
+                        headers: {
+                            Authorization: `Bearer ${userToken}`,
+                            Accept: "application/json",
+                        },
+                        body: data,
+                    }
+                );
+                const responseData = await response.json();
+            } catch (error) {
+                throw error;
+            }
+        }
+        fetchDatatwo();
+        setSpamcheck(false);
+    }, [choiceid]);
+
+    // relode
+
+    useEffect(() => {
+        const handleReload = (event) => {
+            const message =
+                "Are you sure you want to reload? This will end your session.";
+            if (!window.confirm(message)) {
+                event.preventDefault();
+            } else {
+                localStorage.removeItem("sessionData");
+            }
+        };
+
+        window.addEventListener("beforeunload", handleReload);
+        window.addEventListener("unload", handleReload);
+
+        return () => {
+            // navigate("/user/iqtest");
+            window.removeEventListener("beforeunload", handleReload);
+            window.removeEventListener("unload", handleReload);
+        };
+    }, []);
+
+    // relode
 
     useEffect(() => {
         if (loginUser == null) {
@@ -132,7 +177,17 @@ const Exam = () => {
     }, []);
 
     if (loading) {
-        return <h1 className="mt-16 text-2xl">Loading......</h1>;
+        return (
+            <div className="mt-24">
+                <Image
+                    className="mx-auto md:mb-7 mb-2 w-[120px] h-[100px]"
+                    imgsrc={img}
+                />
+                <p className=" font-rb font-bold text-xl text-center">
+                    Preparing question data. Please wait...
+                </p>
+            </div>
+        );
     }
 
     let handlereload = () => {
@@ -180,6 +235,10 @@ const Exam = () => {
     time.setSeconds(time.getSeconds() + examcount);
 
     let hendlesubmit = async (sitem, item) => {
+        dispatch(checkId({ qid: item.id, id: sitem.id }));
+
+        localStorage.setItem("checkid", JSON.stringify(checkid));
+
         try {
             let data = new FormData();
             data.append("choice_id", sitem.id);
@@ -202,12 +261,12 @@ const Exam = () => {
         } catch (error) {
             throw error;
         }
-        setQuestion(item.id);
-        setModelid(modeltestvaluse.id);
+
         setChoiceid(sitem.id);
     };
 
     let hendleexamsubmit = async () => {
+        setSubmitLoad(true);
         try {
             let data = new FormData();
             data.append("model_id", modeltestvaluse.id);
@@ -230,7 +289,10 @@ const Exam = () => {
         }
         setIsOpen(true);
         dispatch(questionid(1));
+        dispatch(checkId({}));
         localStorage.setItem("questionid", JSON.stringify(1));
+        localStorage.setItem("checkid", JSON.stringify({}));
+        setSubmitLoad(false);
     };
 
     let handlearrowleft = () => {
@@ -276,7 +338,7 @@ const Exam = () => {
     return (
         <>
             <section className="mt-16  p-4 mx-auto ">
-                <div className=" relative">
+                <div className=" relative container mx-auto px-5">
                     <div className="flex justify-between">
                         <h2 className=" font-rb font-bold text-2xl mb-4 ">
                             {modeltestvaluse.title}
@@ -294,21 +356,15 @@ const Exam = () => {
                                 <p
                                     className={`
                                     ${
-                                        qusid == item.index &&
-                                        "!bg-[#0066db] text-white border "
+                                        (qusid === item.index &&
+                                            "!bg-[#0066db] text-white border ") ||
+                                        (checkid[item.id] &&
+                                            "!bg-[#21BA45] text-white border ")
                                     }
                                     ${
-                                        item.exam_status &&
-                                        "!bg-[#21BA45] text-white border "
-                                    } 
-                                  ${
-                                      item.index < qusid
-                                          ? "bg-red-500 text-white"
-                                          : ""
-                                  } ${
-                                        item.index < upperindex + 1
-                                            ? "bg-red-500 text-white"
-                                            : ""
+                                        (item.index < qusid ||
+                                            item.index < upperindex + 1) &&
+                                        "bg-red-500 text-white"
                                     } border rounded-sm py-1 px-3`}
                                     onClick={() => handlequstionindex(item)}
                                 >
@@ -357,12 +413,13 @@ const Exam = () => {
                                                     (sitem, index) => (
                                                         <p
                                                             key={sitem.id}
-                                                            className={`
-                                                    ${
-                                                        sitem.exam_status
-                                                            ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
-                                                            : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
-                                                    }`}
+                                                            className={`${
+                                                                sitem.id ==
+                                                                checkid[item.id]
+                                                                    ? "border rounded bg-green-400 border-[#36ff40] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0c0c0c] mx-auto cursor-pointer w-[98%]"
+                                                                    : "border rounded border-[#292055] font-rb sm:text-lg py-2 px-2 sm:px-6  text-[#0C0C0C] mx-auto cursor-pointer w-[98%]"
+                                                            }
+                                                    `}
                                                             onClick={() =>
                                                                 hendlesubmit(
                                                                     sitem,
@@ -375,7 +432,6 @@ const Exam = () => {
                                                         </p>
                                                     )
                                                 )}
-                                                
                                         </div>
                                     </div>
                                     {lastlength != qusid ? (
@@ -389,13 +445,38 @@ const Exam = () => {
                                         </div>
                                     ) : (
                                         <div>
-                                            <button
-                                                onClick={hendleexamsubmit}
-                                                className="border bg-[#21BA45] border-[#21BA45]  p-3 text-lg font-semibold text-white  cursor-pointer ml-7   smalldevice:max-sm:absolute -bottom-[70px] right-5"
-                                            >
-                                                {" "}
-                                                Submit
-                                            </button>
+                                            {submitLoad ? (
+                                                <button className="border bg-[#21BA45] border-[#21BA45] px-8 py-3  ml-7 smalldevice:max-sm:absolute -bottom-[70px] right-5">
+                                                    <svg
+                                                        className="animate-spin h-7 w-7 text-white"
+                                                        xmlns="http://www.w3.org/2000/svg"
+                                                        fill="none"
+                                                        viewBox="0 0 24 24"
+                                                    >
+                                                        <circle
+                                                            className="opacity-25"
+                                                            cx="12"
+                                                            cy="12"
+                                                            r="10"
+                                                            stroke="currentColor"
+                                                            strokeWidth="4"
+                                                        ></circle>
+                                                        <path
+                                                            className="opacity-75"
+                                                            fill="currentColor"
+                                                            d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.373A8 8 0 0012 20v4c-6.627 0-12-5.373-12-12h4zm14-2a8 8 0 01-8 8v4c6.627 0 12-5.373 12-12h-4zM20 4.627A8 8 0 0012 4V0c6.627 0 12 5.373 12 12h-4z"
+                                                        ></path>
+                                                    </svg>
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    onClick={hendleexamsubmit}
+                                                    className="border bg-[#21BA45] border-[#21BA45]  p-3 text-lg font-semibold text-white  cursor-pointer ml-7   smalldevice:max-sm:absolute -bottom-[70px] right-5"
+                                                >
+                                                    {" "}
+                                                    Submit
+                                                </button>
+                                            )}
                                         </div>
                                     )}
                                 </div>

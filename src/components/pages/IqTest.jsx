@@ -21,6 +21,7 @@ const customStyles = {
         bottom: "auto",
         marginRight: "-45%",
         transform: "translate(-50%, -50%)",
+        padding: "0px",
     },
     overlay: {
         backgroundColor: "rgba(12, 12, 12, 0.85)",
@@ -253,22 +254,26 @@ const IqTest = (props) => {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <p className="sm:w-[456px] font-rb text-lg text-[#454545] mb-10">
-                        Send a request to Admin to start the exam
-                    </p>
-                    <div className="flex justify-between">
-                        <button
-                            onClick={closeModal}
-                            className="w-[48%] border text-[#3888F9] transition duration-300 ease-in-out border-[#3888F9] py-2 px-6 rounded hover:bg-[#3888F9] hover:text-white text-lg font-rb font-semibold"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            onClick={handlstart}
-                            className="w-[48%] text-[#3888F9] border rounded border-[#3888F9] transition duration-300 ease-in-out py-2 px-6 hover:bg-[#3888F9] hover:text-white text-lg font-rb font-semibold"
-                        >
-                            Start
-                        </button>
+                    <div className="overflow-hidden w-full relative bg-[#d5fafa] xl:p-5">
+                        <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
+                        <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
+                        <p className="sm:w-[456px] font-rb text-lg text-[#454545] mb-10">
+                            Send a request to Admin to start the exam
+                        </p>
+                        <div className="flex justify-between">
+                            <button
+                                onClick={closeModal}
+                                className="w-[48%] border text-[#198754] transition duration-300 ease-in-out border-[#198754] py-2 px-6 rounded hover:bg-[#198754] hover:text-white text-lg font-rb font-semibold"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handlstart}
+                                className="w-[48%] text-[#198754] border rounded border-[#198754] transition duration-300 ease-in-out py-2 px-6 hover:bg-[#198754] hover:text-white text-lg font-rb font-semibold"
+                            >
+                                Start
+                            </button>
+                        </div>
                     </div>
                 </Modal>
 
@@ -279,23 +284,27 @@ const IqTest = (props) => {
                     style={customStyles}
                     contentLabel="Example Modal"
                 >
-                    <p className="sm:w-[456px] font-rb text-lg text-[#454545] mb-10">
-                        Starting the quiz will start the timer. Are you sure you
-                        want to start the quiz?
-                    </p>
-                    <div className="flex justify-between">
-                        <button
-                            onClick={() => setIsOpen_2(false)}
-                            className="w-[48%] border text-[#3888F9] transition duration-300 ease-in-out border-[#3888F9] py-2 px-6 rounded hover:bg-[#3888F9] hover:text-white text-lg font-rb font-semibold"
-                        >
-                            Cancel
-                        </button>
-                        <button
-                            onClick={handleexamstart}
-                            className="w-[48%] text-[#3888F9] border rounded border-[#3888F9] transition duration-300 ease-in-out py-2 px-6 hover:bg-[#3888F9] hover:text-white text-lg font-rb font-semibold"
-                        >
-                            Start
-                        </button>
+                    <div className="overflow-hidden w-full relative bg-[#d5fafa] xl:p-5">
+                        <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
+                        <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
+                        <p className="sm:w-[456px] font-rb text-lg text-[#454545] mb-10">
+                            Starting the quiz will start the timer. Are you sure
+                            you want to start the quiz?
+                        </p>
+                        <div className="flex justify-between">
+                            <button
+                                onClick={() => setIsOpen_2(false)}
+                                className="w-[48%] border text-[#198754] transition duration-300 ease-in-out border-[#198754] py-2 px-6 rounded hover:bg-[#198754] hover:text-white text-lg font-rb font-semibold"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={handleexamstart}
+                                className="w-[48%] text-[#198754] border rounded border-[#198754] transition duration-300 ease-in-out py-2 px-6 hover:bg-[#198754] hover:text-white text-lg font-rb font-semibold"
+                            >
+                                Start
+                            </button>
+                        </div>
                     </div>
                 </Modal>
             </div>

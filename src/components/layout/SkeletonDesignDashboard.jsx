@@ -49,7 +49,7 @@ const SkeletonDesignDashboard = () => {
             </div>
 
             <div className="flex w-[28%] flex-col gap-4">
-                <div className=" bg-[#162655]  p-5 rounded-2xl text-center">
+                <div className=" bg-[#EFF5F5]  p-5 rounded-2xl text-center">
                     <div className=" mt-5 rounded-full">
                         <Skeleton
                             className="rounded-full"
@@ -101,7 +101,7 @@ const SkeletonDesignDashboard = () => {
                     </div>
                 </div>
 
-                <div className=" text-center bg-[#162655] p-5 rounded-2xl">
+                <div className=" text-center bg-[#EFF5F5] p-5 rounded-2xl">
                     <Skeleton count={1} height={100} duration={1} width={200} />
                 </div>
             </div>
