@@ -24,7 +24,7 @@ const Show = () => {
         setloading(true);
         try {
             const response = await fetch(
-                `https://admin.icaniqbd.synexdigital.com/api/result/download/${pdfID} `,
+                `http://127.0.0.1:8000/api/result/download/${pdfID} `,
                 {
                     method: "GET",
                     headers: {

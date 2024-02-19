@@ -61,7 +61,7 @@ const Exam = () => {
                 data.append("model_id", examId);
 
                 const response = await fetch(
-                    "https://admin.icaniqbd.synexdigital.com/api/attempt",
+                    "http://127.0.0.1:8000/api/attempt",
                     {
                         method: "POST",
                         headers: {
@@ -93,7 +93,7 @@ const Exam = () => {
                 data.append("model_id", examId);
 
                 const response = await fetch(
-                    "https://admin.icaniqbd.synexdigital.com/api/attempt",
+                    "http://127.0.0.1:8000/api/attempt",
                     {
                         method: "POST",
                         headers: {
@@ -126,7 +126,7 @@ const Exam = () => {
                 data.append("model_id", modeltestvaluse.id);
 
                 const response = await fetch(
-                    "https://admin.icaniqbd.synexdigital.com/api/answer/submit",
+                    "http://127.0.0.1:8000/api/answer/submit",
                     {
                         method: "POST",
                         headers: {
@@ -246,7 +246,7 @@ const Exam = () => {
             data.append("model_id", modeltestvaluse.id);
 
             const response = await fetch(
-                "https://admin.icaniqbd.synexdigital.com/api/answer/submit",
+                "http://127.0.0.1:8000/api/answer/submit",
                 {
                     method: "POST",
                     headers: {
@@ -272,7 +272,7 @@ const Exam = () => {
             data.append("model_id", modeltestvaluse.id);
 
             const response = await fetch(
-                "https://admin.icaniqbd.synexdigital.com/api/answer/submit/done",
+                "http://127.0.0.1:8000/api/answer/submit/done",
                 {
                     method: "POST",
                     headers: {
