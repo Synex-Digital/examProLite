@@ -5,9 +5,9 @@ import "react-loading-skeleton/dist/skeleton.css";
 const SkeletonDesignDashboard = () => {
     return (
         <div className="flex flex-col md:flex-row gap-4 mt-24 px-2 w-full container mx-auto">
-            <div className="xl:w-[72%]">
-                <div className=" w-full flex justify-between text-center">
-                    <div className="rounded-lg bg-[#EFF5F5] px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
+            <div className="xl:w-[72%] md:max-xl:w-1/2">
+                <div className=" w-full xl:flex justify-between text-center">
+                    <div className="rounded-lg bg-[#EFF5F5] md:px-8 py-5 shadow-sm flex flex-col relative overflow-hidden xl:w-[32%]">
                         <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
                         <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
                         <div className="flex gap-x-3 items-center justify-center">
@@ -19,7 +19,7 @@ const SkeletonDesignDashboard = () => {
                         </span>
                     </div>
 
-                    <div className="rounded-lg bg-[#EFF5F5]  px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
+                    <div className="rounded-lg bg-[#EFF5F5]  md:px-8 py-5 shadow-sm flex flex-col relative overflow-hidden smalldevice:max-xl:my-5 xl:w-[32%]">
                         <div className="flex gap-x-3 items-center justify-center">
                             <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
                             <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
@@ -30,7 +30,7 @@ const SkeletonDesignDashboard = () => {
                             <Skeleton count={1} height={20} width={100} />
                         </span>
                     </div>
-                    <div className="rounded-lg  bg-[#EFF5F5]  px-8 py-5 shadow-sm flex flex-col relative overflow-hidden w-[32%]">
+                    <div className="rounded-lg  bg-[#EFF5F5]  md:px-8 py-5 shadow-sm flex flex-col relative overflow-hidden xl:w-[32%]">
                         <div className=" bg-[#19875426] w-20 h-20 rounded-full absolute -bottom-6 -left-6"></div>
                         <div className=" bg-[#19875433] w-10 h-10 rounded-full absolute -bottom-1 -left-1"></div>
                         <div className="flex gap-x-3 items-center justify-center">
@@ -43,12 +43,12 @@ const SkeletonDesignDashboard = () => {
                     </div>
                 </div>
 
-                <div className=" mt-5 w-full">
+                <div className="smalldevice:max-xl:hidden mt-5 w-full">
                     <Skeleton count={1} height={"60vh"} width={"100%"} />
                 </div>
             </div>
 
-            <div className="flex w-[28%] flex-col gap-4">
+            <div className="flex xl:w-[28%] md:max-xl:w-1/2 flex-col gap-4">
                 <div className=" bg-[#EFF5F5]  p-5 rounded-2xl text-center">
                     <div className=" mt-5 rounded-full">
                         <Skeleton

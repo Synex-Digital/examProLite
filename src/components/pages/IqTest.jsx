@@ -58,7 +58,7 @@ const IqTest = (props) => {
         async function fetchData() {
             try {
                 const response = await fetch(
-                    "http://127.0.0.1:8000/api/model/test",
+                    "https://admin.icaniqbd.synexdigital.com/api/model/test",
                     {
                         method: "GET",
                         headers: {
@@ -80,23 +80,23 @@ const IqTest = (props) => {
 
     if (loading) {
         return (
-            <div className="flex mt-24 gap-5 flex-wrap container mx-auto ">
-                <div className="w-[32%]">
+            <div className="flex smalldevice:max-sm:flex-col mt-24 gap-4 flex-wrap container mx-auto px-2">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
-                <div className="w-[32%]">
+                <div className="lg:w-[32%] sm:w-[48%]">
                     <SkeletonDesign Boxwidth={"32%"} />
                 </div>
             </div>
@@ -115,7 +115,7 @@ const IqTest = (props) => {
     let handlstart = async () => {
         try {
             const response = await fetch(
-                `http://127.0.0.1:8000/api/model/request/${modelsId}`,
+                `https://admin.icaniqbd.synexdigital.com/api/model/request/${modelsId}`,
                 {
                     method: "GET",
                     headers: {
@@ -146,14 +146,17 @@ const IqTest = (props) => {
             let data = new FormData();
             data.append("model_id", examId);
 
-            const response = await fetch("http://127.0.0.1:8000/api/attempt", {
-                method: "POST",
-                headers: {
-                    Authorization: `Bearer ${userToken}`,
-                    Accept: "application/json",
-                },
-                body: data,
-            });
+            const response = await fetch(
+                "https://admin.icaniqbd.synexdigital.com/api/attempt",
+                {
+                    method: "POST",
+                    headers: {
+                        Authorization: `Bearer ${userToken}`,
+                        Accept: "application/json",
+                    },
+                    body: data,
+                }
+            );
 
             const responseData = await response.json();
             dispatch(userExamQuestion(responseData.data));
@@ -169,15 +172,15 @@ const IqTest = (props) => {
     return (
         <>
             <section className="mt-24 w-full">
-                <div className="flex flex-wrap gap-5 container mx-auto overflow-hidden">
+                <div className="flex smalldevice:max-sm:flex-col flex-wrap gap-4 container px-2 mx-auto overflow-hidden">
                     {models.map((item, index) => (
                         <div
                             key={index}
-                            className="w-[32%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl"
+                            className="lg:w-[32%] sm:w-[48%] bg-[#EFF5F5] relative overflow-hidden rounded-2xl"
                         >
                             <div className=" bg-[#19875426] w-28 h-28 rounded-full absolute -top-6 -right-6"></div>
                             <div className=" bg-[#19875433] w-16 h-16 rounded-full absolute -top-1 -right-1"></div>
-                            <div className="p-5 shadow-md">
+                            <div className="p-5 ">
                                 <time className="flex items-center gap-x-1 justify-end font-rb text-sm text-[#6D6D6D]">
                                     <span>
                                         <BsCalendar2Check />
