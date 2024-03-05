@@ -15,7 +15,10 @@ const Rotlayout = () => {
         }
     }, []);
     return (
-        <section className="h-[100vh] flex flex-col justify-between">
+        <section
+            className="flex flex-col justify-between !h-screen"
+            style={{ height: "100vh" }}
+        >
             <Navbar />
             <Outlet />
             <Footar />

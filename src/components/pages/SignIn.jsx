@@ -20,7 +20,7 @@ let initialValue = {
 const notify = (mas) =>
     toast.success(mas, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -31,7 +31,7 @@ const notify = (mas) =>
 const notifytwo = (mas) =>
     toast.warn(mas, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
@@ -44,6 +44,7 @@ const Signin = () => {
     let navigate = useNavigate();
     const dispatch = useDispatch();
     let [show, setShow] = useState(false);
+    let [loading, setLoading] = useState(true);
     let [values, setValues] = useState(initialValue);
     let loginUser = useSelector((state) => state.loggedUser.loginUser);
 
@@ -78,6 +79,7 @@ const Signin = () => {
             });
             return;
         }
+        setLoading(false);
 
         try {
             let data = new FormData();
@@ -108,10 +110,12 @@ const Signin = () => {
                 localStorage.setItem("user", JSON.stringify(responseData.user));
                 notify("Login Successful");
                 navigate("/user/dashboard");
+                setLoading(true);
             }
         } catch (error) {
             throw error;
         }
+        setLoading(true);
     };
 
     return (
@@ -181,12 +185,37 @@ const Signin = () => {
                         <Link className="smalldevice:max-sm:text-white font-rb text-tgcolor font-medium ">
                             Forgot Password?
                         </Link>
-                        <button
-                            className=" bg-tgcolor w-full p-1 md:p-3 mt-2 text-white md:mt-5 text-xl font-medium md:font-bold rounded smalldevice:max-sm:my-5 smalldevice:max-sm:p-3"
-                            onClick={handlelogin}
-                        >
-                            Log in
-                        </button>
+                        {loading ? (
+                            <button
+                                className=" bg-tgcolor w-full p-1 md:p-3 mt-2 text-white md:mt-5 text-xl font-medium md:font-bold rounded smalldevice:max-sm:my-5 smalldevice:max-sm:p-3"
+                                onClick={handlelogin}
+                            >
+                                Log in
+                            </button>
+                        ) : (
+                            <button className="bg-tgcolor w-full p-1 md:p-3 mt-2 text-white md:mt-5 text-xl font-medium md:font-bold rounded smalldevice:max-sm:my-5 smalldevice:max-sm:p-3">
+                                <svg
+                                    className="animate-spin h-7 w-7 text-white mx-auto"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                >
+                                    <circle
+                                        className="opacity-25"
+                                        cx="12"
+                                        cy="12"
+                                        r="10"
+                                        stroke="currentColor"
+                                        strokeWidth="4"
+                                    ></circle>
+                                    <path
+                                        className="opacity-75"
+                                        fill="currentColor"
+                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.373A8 8 0 0012 20v4c-6.627 0-12-5.373-12-12h4zm14-2a8 8 0 01-8 8v4c6.627 0 12-5.373 12-12h-4zM20 4.627A8 8 0 0012 4V0c6.627 0 12 5.373 12 12h-4z"
+                                    ></path>
+                                </svg>
+                            </button>
+                        )}
                     </div>
                 </div>
             </div>

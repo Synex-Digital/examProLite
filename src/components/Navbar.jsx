@@ -19,7 +19,7 @@ import { RiLogoutCircleLine } from "react-icons/ri";
 const notify = (mas) =>
     toast.success(mas, {
         position: "top-right",
-        autoClose: 5000,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: true,
