@@ -10,7 +10,6 @@ import Image from "../layout/Image";
 import { userExamQuestion } from "../../../features/examQuestionSlice";
 import { checkId } from "../../../features/checkidSlice";
 import ModalImage from "react-modal-image";
-import Cookies from "universal-cookie";
 
 const customStyles = {
     content: {
@@ -28,13 +27,11 @@ const customStyles = {
 };
 
 const Exam = () => {
-    const cookies = new Cookies();
     let navigate = useNavigate();
     let dispatch = useDispatch();
     const [models, setModels] = useState([]);
     const [question, setQuestion] = useState("");
     const [choiceid, setChoiceid] = useState("");
-    const [modelid, setModelid] = useState("");
     const [examcount, setExamCount] = useState("");
     Modal.setAppElement("#root");
     const [modalIsOpen, setIsOpen] = useState(false);
@@ -49,8 +46,6 @@ const Exam = () => {
     let [loading, setloading] = useState(true);
     let [spamcheck, setSpamcheck] = useState(true);
     const [upperindex, setUpperIndex] = useState("");
-    let cookData = cookies.get("realdata");
-    // const [chackid, setChackid] = useState("");
 
     // model data
 
@@ -337,8 +332,8 @@ const Exam = () => {
 
     return (
         <>
-            <section className="mt-16  p-4 mx-auto ">
-                <div className=" relative container mx-auto px-5">
+            <section className="mt-16 p-4">
+                <div className=" relative container mx-auto w-full px-5">
                     <div className="flex justify-between">
                         <h2 className=" font-rb font-bold text-2xl mb-4 ">
                             {modeltestvaluse.title}
